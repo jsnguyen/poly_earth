@@ -18,15 +18,66 @@ end
 
 function index_to_coords(filename,i,j)
   # indicies start at 1
+  @assert 0 < i < HGT_SQ_SZ
+  @assert 0 < j < HGT_SQ_SZ 
   
   revised = filename[1:end-length(".hgt")]
-  println(revised)
+  ud = ['n','s']
+  lr = ['e','w']
 
-  return (i-1)*arcsec2deg,(j-1)*arcsec2deg
+
+  UD = '0'
+  LR = '0'
+
+  for char in ud
+    if occursin(char,revised)
+      UD = char
+      break
+    end
+  end
+
+  for char in lr
+    if occursin(char,revised)
+      LR = char
+      break
+    end
+  end
+
+  second_index = 0
+  for char in [UD,LR]
+    res = findfirst(isequal(char),revised)
+    if res == nothing || res == 1
+      continue
+    else
+      second_index = res
+    end
+  end
+
+  lat = parse(Float64,revised[2:second_index-1])
+  lon = parse(Float64,revised[second_index+1:end])
+
+  lat_inc = (i-1)*arcsec2deg
+  lon_inc = (j-1)*arcsec2deg
+
+  if UD == 's'
+    lat = -lat
+    lat -= lat_inc
+  else
+    lat += lat_inc
+  end
+
+  if LR == 'w'
+    lon = -lon
+    lon -= lon_inc 
+  else
+    lon += lon_inc 
+  end
 
 
+  return lat,lon
 end
 
 filename = "n37w122.hgt"
 data = parse_hgt(filename)
-index_to_coords(filename,0,0)
+lat,lon = index_to_coords(filename,2,2)
+println(lat,",",lon)
