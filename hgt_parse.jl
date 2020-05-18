@@ -11,9 +11,9 @@ function parse_hgt(filename)
 
   data = reinterpret(Int16, raw_data)
   data = (ntoh).(data)
-  data = reshape(data,HGT_SQ_SZ,HGT_SQ_SZ)
+  new_data = reshape(data,(HGT_SQ_SZ,HGT_SQ_SZ))
 
-  return data
+  return new_data
 end
 
 function index_to_coords(filename,i,j)
@@ -78,6 +78,7 @@ function index_to_coords(filename,i,j)
 end
 
 filename = "n37w122.hgt"
-data = parse_hgt(filename)
+new_data = parse_hgt(filename)
 lat,lon = index_to_coords(filename,2,2)
 println(lat,",",lon)
+print(size(new_data))
