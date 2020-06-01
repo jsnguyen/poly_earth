@@ -1,8 +1,7 @@
-
 const HGT_SQ_SZ = 3601
 const arcsec2deg = 1/3600
 
-function parse_hgt(filename)
+function parse_hgt(filename::String)
   raw_data = Array{UInt8}(undef, HGT_SQ_SZ*HGT_SQ_SZ)
 
   open(filename,"r") do file
@@ -11,15 +10,16 @@ function parse_hgt(filename)
 
   data = reinterpret(Int16, raw_data)
   data = (ntoh).(data)
-  new_data = reshape(data,(HGT_SQ_SZ,HGT_SQ_SZ))
 
+  new_data = reshape(data,HGT_SQ_SZ,HGT_SQ_SZ)
+  
   return new_data
 end
 
-function index_to_coords(filename,i,j)
+function index_to_coords(filename::String,i::Int64,j::Int64)
   # indicies start at 1
-  @assert 0 < i < HGT_SQ_SZ
-  @assert 0 < j < HGT_SQ_SZ 
+  @assert 1 <= i <= HGT_SQ_SZ
+  @assert 1 <= j <= HGT_SQ_SZ 
   
   revised = filename[1:end-length(".hgt")]
   ud = ['n','s']
@@ -77,8 +77,10 @@ function index_to_coords(filename,i,j)
   return lat,lon
 end
 
+#=
 filename = "n37w122.hgt"
 new_data = parse_hgt(filename)
 lat,lon = index_to_coords(filename,2,2)
 println(lat,",",lon)
-print(size(new_data))
+print(new_data[1,2])
+=#
