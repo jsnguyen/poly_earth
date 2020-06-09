@@ -11,7 +11,7 @@ function parse_hgt(filename::String)
   data = reinterpret(Int16, raw_data)
   data = (ntoh).(data)
 
-  new_data = reshape(data,HGT_SQ_SZ,HGT_SQ_SZ)
+  new_data = reverse(transpose(reshape(data,HGT_SQ_SZ,HGT_SQ_SZ)),dims=1)
   
   return new_data
 end
