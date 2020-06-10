@@ -5,6 +5,13 @@ function get_unit_plane_normal(A::Array{Float64,1},B::Array{Float64,1},C::Array{
 
   plane_normal = cross(AB,AC)
   unit_plane_normal = normalize(plane_normal)
+
+  for el in unit_plane_normal
+    if isnan(el)
+      println("Found NaN! ",A,B,C)
+    end
+  end
+
   return unit_plane_normal
 end
 
@@ -27,7 +34,7 @@ function write_triangle(filename::String,triangles::Array{Array{Array{Float64,1}
       write(f,"endloop\n")
       write(f,"endfacet\n")
 
-      @printf("%3.2f%%\n",100.0*(i/length(triangles)))
+      #@printf("%3.2f%%\n",100.0*(i/length(triangles)))
 
     end
 
