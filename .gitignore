@@ -4,3 +4,4 @@
 *.num
 *.swb
 *.stl
+.ipynb_checkpoints
