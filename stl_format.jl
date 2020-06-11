@@ -15,7 +15,7 @@ function get_unit_plane_normal(A::Array{Float64,1},B::Array{Float64,1},C::Array{
   return unit_plane_normal
 end
 
-function write_triangle(filename::String,triangles::Array{Array{Array{Float64,1},1},1})
+function write_stl_ascii(filename::String,triangles::Array{Array{Array{Float64,1},1},1})
   open(filename,"w") do f 
 
     write(f,"solid mesh\n")
@@ -34,11 +34,35 @@ function write_triangle(filename::String,triangles::Array{Array{Array{Float64,1}
       write(f,"endloop\n")
       write(f,"endfacet\n")
 
-      #@printf("%3.2f%%\n",100.0*(i/length(triangles)))
-
     end
 
     write(f,"endsolid mesh\n")
+
+  end
+
+end
+
+function write_stl_binary(filename::String,triangles::Array{Array{Array{Float64,1},1},1})
+  open(filename,"w") do f 
+
+    write(f,zeros(UInt8,80))
+    write(f,convert(UInt32,size(triangles,1)))
+    for (i,tri) in enumerate(triangles)
+
+      norm = get_unit_plane_normal(tri...)
+      write(f,convert(Float32,norm[1]))
+      write(f,convert(Float32,norm[2]))
+      write(f,convert(Float32,norm[3]))
+
+      for vertex in tri
+        write(f,convert(Float32,vertex[1]))
+        write(f,convert(Float32,vertex[2]))
+        write(f,convert(Float32,vertex[3]))
+      end
+
+      write(f,convert(UInt16,0))
+
+    end
 
   end
 
