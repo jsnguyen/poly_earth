@@ -7,6 +7,8 @@ Here's an example of Mt. Fuji (also included in the examples folder):
 
 Essentially, all this package does is take the mesh data of the elevation and draws triangles between adjacent points, creating a rough surface. Triangles are then added on the sides and the bottom to make a closed solid that can be 3d printed.
 
+All of the Julia source code is in the `src` folder. Please peruse in there to understand the example Mt. Fuji script in the `examples` folder.
+
 A simple download script is included at `get_hgt.sh`, please read the comments inside to see what it does.
 
 To access the data you need to create an account at this website: https://e4ftl01.cr.usgs.gov/ASTT/
@@ -16,4 +18,4 @@ https://stackoverflow.com/questions/357415/how-to-read-nasa-hgt-binary-files
 
 # Notes
 
-Some of the notebooks have some experiments on drawing 2d topographical lines for making maps in both Julia and Python, but I didn't get very far with this.
+The notebooks have some experiments on drawing 2d topographical lines for making maps in both Julia and Python, but I didn't get very far with this.
