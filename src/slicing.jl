@@ -34,6 +34,7 @@ end
 
 function slice_data(data::Array{Int16,2},coords::Array{Float64,1})
   indicies = get_slice_indicies_corner(coords)
+  println("Slice indicies ",indicies)
   return data[indicies[1]:indicies[2],indicies[3]:indicies[4]]
 end
 

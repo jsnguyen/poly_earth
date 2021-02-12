@@ -18,8 +18,8 @@ mesh_triangles = get_mesh_triangles(sliced_data)
 side_triangles = get_side_triangles(sliced_data,offset)
 base_triangles = get_base_triangles(sliced_data,offset)
 
-triangles = cat(base_triangles,cat(mesh_triangles,side_triangles,dims=1),dims=1)
+triangles = cat(base_triangles,cat(mesh_triangles,side_triangles,dims=1),dims=1) # combine all the triangles into one
 
 println("Writing triangles to file...")
-write_stl_binary("out.stl",triangles)
+write_stl_binary("mt_fuji.stl",triangles)
 println("Done writing triangles to file...")
